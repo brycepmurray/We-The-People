@@ -1,2 +1,2 @@
-# We-The-People
+# We-The-Posters
 forum project
