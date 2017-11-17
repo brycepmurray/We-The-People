@@ -16,7 +16,8 @@ function CommentsController() {
             var comment = comments[i]
             template += `
             <div class="col-sm-12 text-justify panel-body well">
-            <p>${comment.text}</p>
+            <p><button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-thumbs-up"></span></button>${comment.text}</p>
         </div>
             `
         }
