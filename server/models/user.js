@@ -1,5 +1,6 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcryptjs')
+var Posts = require('./post')
 var Schema = mongoose.Schema
 var ObjectId = Schema.Types.ObjectId
 const SALT_FACTOR = 10
@@ -38,5 +39,10 @@ schema.methods.validatePassword = function (password) {
     });
   })
 };
+
+schema.pre('remove', function (next) {
+  Posts.remove({ userId: this._id }).exec()
+  next()
+});
 
 module.exports = mongoose.model('User', schema)
