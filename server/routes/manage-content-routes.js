@@ -3,7 +3,6 @@ var Comments = require('../models/comment')
 var Users = require('../models/user')
 var router = require('express').Router()
 
-
 // POST new post
 router.post('/manage-content/posts/', (req, res, next) => {
     req.body.userId = req.session.uid
@@ -16,9 +15,9 @@ router.post('/manage-content/posts/', (req, res, next) => {
         })
 })
 
-
 // POST new comment on specific post
 router.post('/manage-content/posts/:postId/comments/', (req, res, next) => {
+    req.body.userId = req.session.uid
     Comments.create(req.body)
         .then(comment => {
             res.send(comment)
@@ -28,30 +27,37 @@ router.post('/manage-content/posts/:postId/comments/', (req, res, next) => {
         })
 })
 
-
 // DELETE specific post
-// add check: user can only delete own posts
-//remember to delete all comments made on parent post
 router.delete('/manage-content/posts/:postId', (req, res, next) => {
     Posts.findById(req.params.postId)
         .then(post => {
+            console.log('1', post.userId.toString())
+            console.log('2', req.session.uid.toString())
+            console.log('3', post.userId.toString() == req.session.uid.toString())
+            if (!(post.userId.toString() == req.session.uid.toString())) {
+                return
+            }
             post.remove()
             res.send({ message: 'Post successfully deleted.' })
         })
         .catch(err => {
-            res.status(400).send({ Error: err })
+            res.status(400).send({ Error: "Cannot delete content posted by another user." })
         })
 })
 
+// DELETE own user record
 router.delete('/manage-content/users/:userId', (req, res, next) => {
-    Users.findByIdAndRemove(req.params.userId)
-        .then(() => {
+    Users.findById(req.params.userId)
+        .then(user => {
+            if (!(user._id.toString() == req.session.uid.toString())) {
+                return
+            }
+            post.remove()
             res.send({ message: 'User successfully deleted.' })
         })
         .catch(err => {
             res.status(400).send({ Error: err })
         })
 })
-
 
 module.exports = router

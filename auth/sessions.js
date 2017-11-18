@@ -1,6 +1,6 @@
 let session = require('express-session');
 let MongoDBStore = require('connect-mongodb-session')(session);
-var connectionString = "mongodb://admin:caligula@ds044709.mlab.com:44709/we-the-posters"
+var connectionString = 'mongodb://admin:nero@ds036079.mlab.com:36079/we-the-posters'
 
 let store = new MongoDBStore(
 	{
