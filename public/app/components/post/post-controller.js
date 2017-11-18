@@ -45,6 +45,7 @@ function PostsController() {
     }
 
     this.removePost = function removePost(postId) {
+        debugger
         postsService.removePost(postId, this.getPosts)
     }
 

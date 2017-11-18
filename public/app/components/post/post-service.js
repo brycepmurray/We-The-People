@@ -52,7 +52,7 @@ function PostsService() {
     this.removePost = function removePost(postId, getPosts) {
         var url = baseUrl.replace('view', 'manage')
         $.ajax({
-            url: url + `/${postId}`,
+            url: url + "/" + postId,
             method: 'DELETE'
         })
             .then(getPosts)
