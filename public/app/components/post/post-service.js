@@ -34,11 +34,18 @@ function PostsService() {
         }
     }
 
-    this.addPost = function addPost(form, getPosts) {
-        if (!form || !getPosts || typeof getPosts != 'function') { return console.error('Unable to add post', 'bad parameters', form, getPosts) }
+    this.addPost = function addPost(form, cb) {
+        debugger
+        // if (!form || !getPosts || typeof getPosts != 'function') { return console.error('Unable to add post', 'bad parameters', form, getPosts) }
         var newPost = new Post(form)
+        // newPost.postId = postId
+        baseUrl = baseUrl.replace('view', 'manage')
         $.post(baseUrl, newPost)
-            .then(getPosts)
+            .then(results => {
+                baseUrl = baseUrl.replace('manage', 'view')
+                var post = results
+                cb(post)
+            })
             .fail(logError)
     }
 

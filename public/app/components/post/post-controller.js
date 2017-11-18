@@ -7,8 +7,8 @@ function PostsController() {
     //ID Draws ADDED Posts
     var postsFormElem = document.getElementById("add-post-form")
 
-    this.getPosts = function getPosts(){
-        postsService.getPosts(drawPosts)
+    this.getPosts = function getPosts(posts){
+        postsService.getPosts(drawPosts, posts)
     }
     
     // Function Draws Posts
@@ -35,9 +35,8 @@ function PostsController() {
     this.addPost = function addPost(event) {
         event.preventDefault()
         var form = event.target
-        postsService.addPost(form)
+        postsService.addPost(form, this.getPosts)
         postsFormElem.classList.toggle('hidden', true)
-        drawPosts()
     }
 
     // //Toggles ADD POST FORM
@@ -45,5 +44,5 @@ function PostsController() {
         postsFormElem.classList.toggle('hidden')
     }
 
-    this.getPosts()
+    this.getPosts(drawPosts)
 }
