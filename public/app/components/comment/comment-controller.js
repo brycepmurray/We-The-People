@@ -8,17 +8,17 @@ function CommentsController() {
     var commentsFormElem = document.getElementById("add-comment-form")
 
     //Function to get comments from service
-    this.getComments = function getComments(title, image, _id){
-        var post = {
-            title: title,
-            image: image,
-            _id: _id
-        }
+    this.getCommentsByPostId = function getCommentsByPostId(postId){
+        commentsService.getPost(postId, getComments)
+    }
+    
+    function getComments(post){
         commentsService.getComments(drawComments, post)
     }
     
     // Function Draws Posts
     function drawComments(comments, post) {
+
         var template = ''
         template += `
         <div class="row post-top post-width">
@@ -36,12 +36,12 @@ function CommentsController() {
     </div>
     <div class="row">
     <div class="col-sm-6 col-sm-offset-3 hidden" id="add-comment-form">
-        <form class="form" onsubmit="app.controllers.commentsCtrl.addComment(event)">
+        <form class="form" onsubmit="app.controllers.commentsCtrl.addComment(event, '${post._id}')">
             <div class="form-group">
                 <input type="text" name="text" class="form-control" placeholder="Text" required>
             </div>
             <div class="form-group">
-                <button class="btn btn-primary" type="submit" onsubmit="app.controllers.commentsCtrl.addComment(event)">Submit</button>
+                <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </form>
     </div>
@@ -70,13 +70,13 @@ function CommentsController() {
     }
 
     //Function Adds NEW posts
-    this.addComment = function addComment(event) {
+    this.addComment = function addComment(event, postId) {
         event.preventDefault()
         var form = event.target
-        commentsService.addComment(form, this.getComments)
+        commentsService.addComment(form, this.getCommentsByPostId , postId)
         var commentsFormElem = document.getElementById("add-comment-form")
         commentsFormElem.classList.toggle('hidden', true)
-        drawComments()
+        //drawComments()
     }
 
     // //Toggles ADD COMMENT FORM

@@ -4,6 +4,9 @@ function CommentsService() {
     //***BEGINNING OF SERVER REQUESTS****
     
     var comments = []
+
+    var baseUrl
+    var activePost
     
     function Comment(config) {
         this.text = config.text.value
@@ -18,7 +21,7 @@ function CommentsService() {
     //Function to get comments from back-end - takes in draw as cb
     this.getComments = function getComments(cb, post) {
         if (!cb || typeof cb != 'function') { return console.error('Woah I need a cb to run') }
-        var baseUrl = `http://localhost:3000/view-content/posts/${post._id}/comments`
+        baseUrl = `http://localhost:3000/view-content/posts/${post._id}/comments`
         $.get(baseUrl)
             .then(res => {
                 comments = res
@@ -37,13 +40,20 @@ function CommentsService() {
         }
     }
 
-    this.addComment = function addComment(form, getComments) {
+    this.addComment = function addComment(form, getComments, postId) {
         debugger
         var newComment = new Comment(form)
-        var baseUrl = `http://localhost:3000/view-content/posts/${post._id}/comments`
+        newComment.postId = postId
+        console.log('newComment: ', newComment)
+        baseUrl = baseUrl.replace('view', 'manage')
+        //`http://localhost:3000/view-content/posts/${post._id}/comments`
         $.post(baseUrl, newComment)
-            .then(getComments)
-            .fail(logError)
+            .then(results =>{
+                getComments(postId)
+            })
+            .fail(err=>{
+                logError(err)
+            })
     }
 
     this.removeComment = function removeComment(index, getComments) {
@@ -53,6 +63,14 @@ function CommentsService() {
         })
             .then(getComments)
             .fail(logError)
+    }
+
+    this.getPost = function getPost(postId, cb){
+        $.get(`http://localhost:3000/view-content/posts/${postId}`)
+            .then(post => {
+                cb(post)
+            })
+            .catch(logError)
     }
 
     //FRONT END DUMMY DATA
