@@ -7,23 +7,27 @@ function PostsController() {
     //ID Draws ADDED Posts
     var postsFormElem = document.getElementById("add-post-form")
 
+    this.getPosts = function getPosts(){
+        postsService.getPosts(drawPosts)
+    }
+    
     // Function Draws Posts
-    function drawPosts() {
-        var posts = postsService.getPosts()
+    function drawPosts(posts) {
         var template = ''
-
         for (var i = 0; i < posts.length; i++) {
             var post = posts[i]
             template += `
             <div class= "row post-top post-width">
             <div class="col-sm-12 text-center panel-heading panel-default well">
             <h3>${post.title}</h3>
-            <img class="img-center img-responsive post-img" src="${post.img}">
-            <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postCtrl.removePost(${i})"></i>
+            <img class="img-center img-responsive post-img" src="${post.image}">
+            <button class="btn btn-primary" onclick="app.controllers.commentsCtrl.getCommentsByPostId('${post._id}')">View Comments</button>
+            <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postCtrl.removePost('${i}')"></i>
             </div>
             </div>
             `
         }
+        document.getElementById('comment-id').innerHTML = ''
         postsElem.innerHTML = template
     }
 
@@ -41,5 +45,5 @@ function PostsController() {
         postsFormElem.classList.toggle('hidden')
     }
 
-    drawPosts()
+    this.getPosts()
 }

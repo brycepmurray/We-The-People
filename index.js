@@ -16,6 +16,8 @@ server.use(bp.json())
 server.use(bp.urlencoded({extended: true}))
 server.use(sessions)
 
+
+server.use(express.static(__dirname + '/public'))
 ///register routes
 
 server.use(userRoutes)
