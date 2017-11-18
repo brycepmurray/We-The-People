@@ -1,5 +1,5 @@
 .nav-img {
-    height: 7vh;
+    height: 5rem;
 }
 
 .post-top {
@@ -21,6 +21,10 @@
 
 .navbar-default .navbar-text {
     color: black;
+}
+
+.post-img {
+    margin: 0 auto;
 }
 
 body{

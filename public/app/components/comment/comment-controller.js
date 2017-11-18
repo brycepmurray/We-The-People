@@ -18,12 +18,11 @@ function CommentsController() {
             <div class="row post-width comment-top">
             <div class="col-sm-12 text-justify panel-body well">
             <p>"USERNAME HERE"</p>
-            <p>
             <button type="button" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-thumbs-up"></span></button>
             <button type="button" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-thumbs-down"></span></button>
-            ${comment.text} </p> <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.commentCtrl.removeComment(${i})"></i>
+            ${comment.text}<i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.commentCtrl.removeComment(${i})"></i>
         </div>
         </div>
             `

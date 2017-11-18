@@ -18,7 +18,7 @@ function PostsController() {
             <div class= "row post-top post-width">
             <div class="col-sm-12 text-center panel-heading panel-default well">
             <h3>${post.title}</h3>
-            <img class="img-center" src="${post.img}">
+            <img class="img-center img-responsive post-img" src="${post.img}">
             <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postCtrl.removePost(${i})"></i>
             </div>
             </div>
