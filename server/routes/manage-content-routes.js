@@ -70,10 +70,6 @@ router.delete('/manage-content/posts/:postId/comments/:commentId', (req, res, ne
         })
 })
 
-
-
-
-
 // DELETE own user record
 router.delete('/manage-content/users/:userId', (req, res, next) => {
     Users.findById(req.params.userId)
@@ -91,5 +87,60 @@ router.delete('/manage-content/users/:userId', (req, res, next) => {
             res.status(400).send({ Error: err })
         })
 })
+
+/*
+Voting
+    - targeting comment a given id
+    - if `votes` has no key matching userId:
+        - no vote has been recorded, so create key = userId and value = "up" ||  "down"
+    - else if `votes` has key matching userId:
+        - if votes[type] == type sent by user, do nothing
+        - if votes[type] != type sent by user, replace with new vote
+*/
+
+router.put('/manage-content/posts/:postId/comments/:commentId', (req, res, next) => {
+    console.log('req.body: ', req.body)
+    Comments.findById(req.params.commentId)
+        .then( comment => {
+            comment.votes[req.session.uid] = req.body.value
+            Comments.update(comment)
+            res.send(comment)
+        })
+        .catch(err => {
+            res.status(400).send({ Error: err })
+        })
+})
+
+/*
+
+router.put('/manage-content/posts/:postId/comments/:commentId', (req, res, next) => {
+    console.log('req.body: ', req.body)
+    Comments.findById(req.params.commentId)
+        .then( comment => {
+            if (req.body.value === 1) {
+                if (!comment.upvotes.includes(req.session.uid)) {
+                    comment.upvotes.push(req.session.uid)
+                }
+                if (comment.downvotes.includes(req.session.uid)) {
+                    comment.downvotes.splice(comment.downvotes.indexOf(req.session.uid), 1)
+                }
+            }
+            if (req.body.value === -1) {
+                if (!comment.downvotes.includes(req.session.uid)) {
+                    comment.downvotes.push(req.session.uid)
+                }
+                if (comment.upvotes.includes(req.session.uid)) {
+                    comment.upvotes.splice(comment.upvotes.indexOf(req.session.uid), 1)
+                }
+            }
+            Comments.update(comment)
+            res.send(comment)
+        })
+        .catch(err => {
+            res.status(400).send({ Error: err })
+        })
+})
+
+*/
 
 module.exports = router
