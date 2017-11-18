@@ -2,22 +2,22 @@ function CommentsService() {
 
     //BACK END
     //***BEGINNING OF SERVER REQUESTS****
-    
+
     var comments = []
 
     var baseUrl
     var activePost
-    
+
     function Comment(config) {
         this.text = config.text.value
-        
+
     }
-    
+
     //Error log
     function logError(err) {
         console.error(err)
     }
-    
+
     //Function to get comments from back-end - takes in draw as cb
     this.getComments = function getComments(cb, post) {
         if (!cb || typeof cb != 'function') { return console.error('Woah I need a cb to run') }
@@ -41,31 +41,34 @@ function CommentsService() {
     }
 
     this.addComment = function addComment(form, getComments, postId) {
-        debugger
         var newComment = new Comment(form)
         newComment.postId = postId
         console.log('newComment: ', newComment)
         baseUrl = baseUrl.replace('view', 'manage')
         //`http://localhost:3000/view-content/posts/${post._id}/comments`
         $.post(baseUrl, newComment)
-            .then(results =>{
+            .then(results => {
                 getComments(postId)
             })
-            .fail(err=>{
+            .fail(err => {
                 logError(err)
             })
     }
 
-    this.removeComment = function removeComment(index, getComments) {
+    this.removeComment = function removeComment(commentId, postId, getCommentsByPostId) {
+        debugger
+        console.log(postId)
+        baseUrl = `http://localhost:3000/manage-content/posts/${postId}/comments/${commentId}`
+        // var url = baseUrl.replace('view', 'manage')
         $.ajax({
-            url: baseUrl + '/' + index,
+            url: baseUrl,
             method: 'DELETE'
-        })
-            .then(getComments)
+            })
+            .then(getCommentsByPostId(postId))
             .fail(logError)
     }
 
-    this.getPost = function getPost(postId, cb){
+    this.getPost = function getPost(postId, cb) {
         $.get(`http://localhost:3000/view-content/posts/${postId}`)
             .then(post => {
                 cb(post)

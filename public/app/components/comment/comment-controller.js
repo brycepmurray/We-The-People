@@ -13,20 +13,21 @@ function CommentsController() {
     }
     
     function getComments(post){
+        console.log('post in get comments: ', post)
         commentsService.getComments(drawComments, post)
     }
     
     // Function Draws Posts
     function drawComments(comments, post) {
-
+        console.log('post: ', post)
         var template = ''
         template += `
         <div class="row post-top post-width">
         <div class="col-sm-12 text-center panel-heading panel-default well">
             <h3>${post.title}</h3>
             <img class="img-center img-responsive post-img" src="${post.image}">
-            <button class="btn btn-primary" onclick="app.controllers.commentsCtrl.getComments('${post}')">View Comments</button>
-            <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postCtrl.removePost('${i}')"></i>
+            <button class="btn btn-primary" onclick="app.controllers.commentsCtrl.getCommentsByPostId('${post._id}')">View Comments</button>
+            <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postCtrl.removePost('${post._id}')"></i>
             </div>
         </div>
         <div class="row">
@@ -57,7 +58,7 @@ function CommentsController() {
             <span class="glyphicon glyphicon-thumbs-up"></span></button>
             <button type="button" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-thumbs-down"></span></button>
-            ${comment.text}<i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.commentsCtrl.removeComment('${i}')"></i>
+            ${comment.text}<i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.commentsCtrl.removeComment('${comment._id}', '${post._id}')"></i>
         </div>
         </div>
             `
@@ -77,6 +78,12 @@ function CommentsController() {
         var commentsFormElem = document.getElementById("add-comment-form")
         commentsFormElem.classList.toggle('hidden', true)
         //drawComments()
+    }
+
+    this.removeComment = function removeComment(commentId, postId) {
+        debugger
+        console.log('post: ', postId)
+        commentsService.removeComment(commentId, postId, this.getCommentsByPostId)
     }
 
     // //Toggles ADD COMMENT FORM
