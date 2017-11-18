@@ -49,9 +49,10 @@ function PostsService() {
             .fail(logError)
     }
 
-    this.removePost = function removePost(index, getPosts) {
+    this.removePost = function removePost(postId, getPosts) {
+        var url = baseUrl.replace('view', 'manage')
         $.ajax({
-            url: baseUrl + '/' + index,
+            url: url + `/${postId}`,
             method: 'DELETE'
         })
             .then(getPosts)
