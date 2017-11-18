@@ -1,0 +1,29 @@
+.nav-img {
+    height: 7vh;
+}
+
+.post-top {
+    margin-top: 5rem;
+}
+
+.comment-top {
+    margin-top: 1rem;
+}
+
+.post-width {
+    margin-left: 10rem;
+    margin-right: 10rem;
+}
+
+.button-center{
+    margin-left: 25rem;
+}
+
+.navbar-default .navbar-text {
+    color: black;
+}
+
+body{
+    font-family: 'Cabin', sans-serif;
+    background-image: url("/assets/paperbg.jpg")
+}
