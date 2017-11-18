@@ -15,10 +15,13 @@ function PostsController() {
         for (var i = 0; i < posts.length; i++) {
             var post = posts[i]
             template += `
-            <div class="col-sm-12 text-center panel-heading panel-default">
+            <div class= "row post-top post-width">
+            <div class="col-sm-12 text-center panel-heading panel-default well">
             <h3>${post.title}</h3>
             <img class="img-center" src="${post.img}">
-        </div>
+            <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postCtrl.removePost(${i})"></i>
+            </div>
+            </div>
             `
         }
         postsElem.innerHTML = template
@@ -29,14 +32,14 @@ function PostsController() {
         event.preventDefault()
         var form = event.target
         postsService.addPost(form)
-        // postsFormElem.classList.toggle('hidden', true)
+        postsFormElem.classList.toggle('hidden', true)
         drawPosts()
     }
 
     // //Toggles ADD POST FORM
-    // this.showAddPostForm = function showAddPostForm() {
-    //     postsFormElem.classList.toggle('hidden')
-    // }
+    this.showAddPostForm = function showAddPostForm() {
+        postsFormElem.classList.toggle('hidden')
+    }
 
     drawPosts()
 }

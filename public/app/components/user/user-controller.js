@@ -16,7 +16,7 @@ function UsersController() {
     //         var user = users[i]
     //         template += `
     //         <div class="col-sm-12 text-justify panel-body well">
-    //         <p>${user.text}</p>
+    //         <p>${users.username}</p>
     //     </div>
     //         `
     //     }
@@ -37,5 +37,9 @@ function UsersController() {
     //     usersFormElem.classList.toggle('hidden')
     // }
 
-    drawUsers()
+
+
+
+
+    // drawUsers()
 }

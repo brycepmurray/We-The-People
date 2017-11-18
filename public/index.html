@@ -6,9 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>We The Posters</title>
+
+
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster|Great+Vibes" rel="stylesheet">
     <!-- Style Sheet -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -24,13 +29,13 @@
                 </a>
             </div>
             <!-- WEBSITE NAME -->
-            <h3 class="navbar-text">We The People</h3>
+            <h1 class="navbar-text" style="font-family: 'Great Vibes', cursive">We The People</h1>
             <!-- FORMS -->
             <form class="navbar-form navbar-right">
-                <!-- SIGN UP LINK -->
-                <p class="navbar-text">
-                    <a href="#" class="navbar-link">Sign-Up</a>
-                </p>
+
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Sign Up</button>
+
                 <!-- USERNAME INPUT FORM -->
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Username">
@@ -45,11 +50,90 @@
         </div>
     </nav>
 
-    <div class="container">
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title text-center">Sign Up for a Free Account</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="Email">Email:</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="john.doe@gmail.com">
+                    </div>
+                    <label for="Username">Username:</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Username">
+                    </div>
+                    <!-- PASSWORD INPUT FORM -->
+                    <label for="Password">Password:</label>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Password">
+                    </div>
+                    <!-- LOGIN BUTTON -->
+                    <button type="button" class="btn btn-primary navbar-btn button-center">Sign Up</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- The body of the page -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-1 col-sm-offset-11">
+                <button type="button" class="btn btn-primary btn-lg btn-right" onclick="app.controllers.postsCtrl.showAddPostForm()">Add Post</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 hidden" id="add-post-form">
+                <form class="form" onsubmit="app.controllers.postsCtrl.addPost(event)">
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input type="text" name="title" class="form-control" placeholder="Title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Image:</label>
+                        <input type="text" name="image" class="form-control" placeholder="Image">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
         <!-- POST DISPLAY -->
         <div class="row">
             <div id="post-id">
                 <!-- POST HERE -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-1 col-sm-offset-11">
+                <button type="button" class="btn btn-primary btn-lg btn-right" onclick="app.controllers.commentsCtrl.showAddCommentForm()">Add Comment</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 hidden" id="add-comment-form">
+                <form class="form" onsubmit="app.controllers.commentsCtrl.addComment(event)">
+                    <div class="form-group">
+                        <!-- <label for="text">Te</label> -->
+                        <input type="text" name="text" class="form-control" placeholder="Text" required>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
         <!-- COMMENTS ON POST -->
@@ -58,12 +142,13 @@
                 <!-- COMMENT HERE -->
             </div>
         </div>
-
-
-
-
-
     </div>
+
+
+
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script src="app/components/comment/comment-service.js"></script>

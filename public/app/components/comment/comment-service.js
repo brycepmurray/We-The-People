@@ -2,9 +2,13 @@ function CommentsService() {
     //Private
 
     // Dummy Data
-    var comments = [{
+    var comments = [
+        {
         text: 'OMG that pic is HILARIOUS!!!!!!'
-    }]
+        },{
+        text: 'Yeah that is HILARIOUS!'
+        }
+]
 
     //Public
 
