@@ -1,6 +1,7 @@
 var mongoose = require('mongoose')
 var bcrypt = require('bcryptjs')
 var Posts = require('./post')
+var Comments = require('./comment')
 var Schema = mongoose.Schema
 var ObjectId = Schema.Types.ObjectId
 const SALT_FACTOR = 10
@@ -41,7 +42,9 @@ schema.methods.validatePassword = function (password) {
 };
 
 schema.pre('remove', function (next) {
+  console.log("in user.js remove")
   Posts.remove({ userId: this._id }).exec()
+  Comments.remove({ userId: this._id }).exec()
   next()
 });
 

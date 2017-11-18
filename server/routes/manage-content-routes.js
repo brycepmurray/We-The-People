@@ -45,14 +45,46 @@ router.delete('/manage-content/posts/:postId', (req, res, next) => {
         })
 })
 
+router.delete('/manage-content/posts/:postId/comments/:commentId', (req, res, next) => {
+    Posts.findById(req.params.postId)
+        .then(() => {
+            Comments.findById(req.params.commentId)
+                .then(comment => {
+                    console.log('1', comment.userId.toString())
+                    console.log('2', req.session.uid.toString())
+                    console.log('3', comment.userId.toString() == req.session.uid.toString())
+                    if (!(comment.userId.toString() == req.session.uid.toString())) {
+                        console.log('4 made it.')
+                        return res.status(400).send({ Error: "Cannot delete content posted by another user." })
+                    }
+                    comment.remove()
+                    console.log('5 made it again.')
+                    res.send({ message: 'Comment successfully deleted.' })
+                })
+                .catch(err => {
+                    res.status(400).send({ Error: err })
+                })
+        })
+        .catch(err => {
+            res.status(400).send({ Error: "WHAT DID YOU DO!?" })
+        })
+})
+
+
+
+
+
 // DELETE own user record
 router.delete('/manage-content/users/:userId', (req, res, next) => {
     Users.findById(req.params.userId)
         .then(user => {
+            console.log('1', user._id.toString())
+            console.log('2', req.session.uid.toString())
+            console.log('3', user._id.toString() == req.session.uid.toString())
             if (!(user._id.toString() == req.session.uid.toString())) {
                 return
             }
-            post.remove()
+            user.remove()
             res.send({ message: 'User successfully deleted.' })
         })
         .catch(err => {

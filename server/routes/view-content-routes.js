@@ -38,6 +38,7 @@ router.get('/view-content/posts/:postId/comments', (req, res, next) => {
         })
 })
 
+//GET single comment
 router.get('/view-content/posts/:postId/comments/:commentId', (req, res, next) => {
     Posts.findById(req.params.postId)
         .then(() => { // don't need to pass in post here
