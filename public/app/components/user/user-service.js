@@ -2,7 +2,7 @@ function UsersService() {
     
     //BACK END
     // START OF SERVER REQUESTS
-    var activeUser
+    var activeUserId
 
     var registerUrl = 'http://localhost:3000/register'
     var loginUrl = 'http://localhost:3000/login'
@@ -18,8 +18,8 @@ function UsersService() {
         console.error(err)
     }
 
-    this.getActiveUser = function() {
-        return activeUser
+    this.getActiveUserId = function() {
+        return activeUserId
     }
 
     // this.getUserInfo = function getUserInfo(user) {
@@ -52,7 +52,10 @@ function UsersService() {
         // if (!form || !getUsers || typeof getUsers != 'function') { return console.error('Unable to add user', 'bad parameters', form) }
         // var newUser = new User(form)
         $.post(loginUrl, user)
-            .then()
+            .then(function(res) {
+                console.log('login response: ', res)
+                activeUserId = res.data._id
+            })
             .fail(logError)
     }
 
