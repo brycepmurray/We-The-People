@@ -34,22 +34,26 @@
             <!-- WEBSITE NAME -->
             <h1 class="navbar-text" style="font-family: 'Great Vibes', cursive">We The People</h1>
             <!-- FORMS -->
-            <form class="navbar-form navbar-right">
 
-                <!-- Trigger the modal with a button -->
-                <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Sign Up</button>
+            <!-- Trigger the modal with a button -->
+            <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal">Sign Up</button>
 
+            <div class="navbar-form navbar-right">
+                 <form type="submit" onsubmit="app.controllers.usersCtrl.getUserInfo(event)">
                 <!-- USERNAME INPUT FORM -->
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username">
+                    <input name="email" type="text" class="form-control" placeholder="Email">
                 </div>
                 <!-- PASSWORD INPUT FORM -->
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Password">
+                    <input name="password" type="text" class="form-control" placeholder="Password">
                 </div>
                 <!-- LOGIN BUTTON -->
-                <button type="button" class="btn btn-default navbar-btn">Login</button>
-            </form>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default navbar-btn">Login</button>
+                </div>
+                </form>
+            </div>
         </div>
     </nav>
 
@@ -129,26 +133,7 @@
                 <!-- POST DISPLAY HERE -->
             </div>
         </div>
-        <div class="row">
-            <!-- ADD COMMENT BUTTON - TOGGLE -->
-            <div class="col-sm-4">
-                <button type="button" class="btn btn-primary btn-lg btn-right" onclick="app.controllers.commentsCtrl.showAddCommentForm()">Add Comment</button>
-            </div>
-        </div>
-        <div class="row">
-            <!-- ADD COMMENT FORM -->
-            <div class="col-sm-6 col-sm-offset-3 hidden" id="add-comment-form">
-                <form class="form" onsubmit="app.controllers.commentsCtrl.addComment(event)">
-                    <div class="form-group">
-                        <input type="text" name="text" class="form-control" placeholder="Text" required>
-                    </div>
-                    <div class="form-group">
-                        <!-- SUBMIT COMMENT BUTTON -->
-                        <button class="btn btn-primary" type="submit">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
         <!-- COMMENTS ON POST -->
         <div class="row">
             <div id="comment-id">
@@ -156,9 +141,6 @@
             </div>
         </div>
     </div>
-
-
-
 
 
     <!-- JQUERY -->

@@ -2,10 +2,23 @@ function UsersController() {
     var usersService = new UsersService()
 
     //ID Draws EXISTING Post
-    var usersElem = document.getElementById("comment-id")
+    var usersElem = document.getElementById("user-id")
 
     //ID Draws ADDED Posts
-    var usersFormElem = document.getElementById("add-comment-form")
+    var usersFormElem = document.getElementById("add-user-form")
+
+    this.getUserInfo = function getUserInfo(event){
+        debugger
+        event.preventDefault()
+        var form = event.target
+        var user = {
+           email: form.email.value,
+           password: form.password.value
+        }
+        usersService.loginUser(user)
+    }
+
+
 
     // Function Draws Posts
     // function drawUsers() {
@@ -17,25 +30,21 @@ function UsersController() {
     //         template += `
     //         <div class="col-sm-12 text-justify panel-body well">
     //         <p>${users.username}</p>
-    //     </div>
+    //         </div>
     //         `
     //     }
     //     usersElem.innerHTML = template
     // }
 
     //Function Adds NEW posts
-    this.addUser = function addUser(event) {
-        event.preventDefault()
-        var form = event.target
-        usersService.addUser(form)
-        // postsFormElem.classList.toggle('hidden', true)
-        drawUsers()
-    }
-
-    // //Toggles ADD COMMENT FORM
-    // this.showAddUserForm = function showAddUserForm() {
-    //     usersFormElem.classList.toggle('hidden')
+    // this.loginUser = function loginUser(event) {
+    //     debugger
+    //     event.preventDefault()
+    //     var form = event.target
+    //     usersService.loginUser(form)
     // }
+
+  
 
 
 

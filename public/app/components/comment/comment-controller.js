@@ -7,11 +7,46 @@ function CommentsController() {
     //ID Draws ADDED Posts
     var commentsFormElem = document.getElementById("add-comment-form")
 
+    //Function to get comments from service
+    this.getComments = function getComments(title, image, _id){
+        var post = {
+            title: title,
+            image: image,
+            _id: _id
+        }
+        commentsService.getComments(drawComments, post)
+    }
+    
     // Function Draws Posts
-    function drawComments() {
-        var comments = commentsService.getComments()
+    function drawComments(comments, post) {
         var template = ''
-
+        template += `
+        <div class="row post-top post-width">
+        <div class="col-sm-12 text-center panel-heading panel-default well">
+            <h3>${post.title}</h3>
+            <img class="img-center img-responsive post-img" src="${post.image}">
+            <button class="btn btn-primary" onclick="app.controllers.commentsCtrl.getComments('${post}')">View Comments</button>
+            <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postCtrl.removePost('${i}')"></i>
+            </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-4">
+            <button type="button" class="btn btn-primary btn-lg btn-right" onclick="app.controllers.commentsCtrl.showAddCommentForm()">Add Comment</button>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-sm-6 col-sm-offset-3 hidden" id="add-comment-form">
+        <form class="form" onsubmit="app.controllers.commentsCtrl.addComment(event)">
+            <div class="form-group">
+                <input type="text" name="text" class="form-control" placeholder="Text" required>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit" onsubmit="app.controllers.commentsCtrl.addComment(event)">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+            `
         for (var i = 0; i < comments.length; i++) {
             var comment = comments[i]
             template += `
@@ -22,11 +57,15 @@ function CommentsController() {
             <span class="glyphicon glyphicon-thumbs-up"></span></button>
             <button type="button" class="btn btn-default btn-sm">
             <span class="glyphicon glyphicon-thumbs-down"></span></button>
-            ${comment.text}<i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.commentCtrl.removeComment(${i})"></i>
+            ${comment.text}<i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.commentsCtrl.removeComment('${i}')"></i>
         </div>
         </div>
             `
         }
+        template += `
+        <button class="btn btn-primary" onclick="app.controllers.postsCtrl.getPosts()">Back</button>
+        `
+        document.getElementById('post-id').innerHTML = ''
         commentsElem.innerHTML = template
     }
 
@@ -34,15 +73,16 @@ function CommentsController() {
     this.addComment = function addComment(event) {
         event.preventDefault()
         var form = event.target
-        commentsService.addComment(form)
-        postsFormElem.classList.toggle('hidden', true)
+        commentsService.addComment(form, this.getComments)
+        var commentsFormElem = document.getElementById("add-comment-form")
+        commentsFormElem.classList.toggle('hidden', true)
         drawComments()
     }
 
     // //Toggles ADD COMMENT FORM
     this.showAddCommentForm = function showAddCommentForm() {
+        var commentsFormElem = document.getElementById("add-comment-form")
         commentsFormElem.classList.toggle('hidden')
     }
 
-    drawComments()
 }
