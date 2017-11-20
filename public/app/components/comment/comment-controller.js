@@ -27,7 +27,7 @@ function CommentsController() {
             <h3>${post.title}</h3>
             <img class="img-center img-responsive post-img" src="${post.image}">
             <button class="btn btn-primary" onclick="app.controllers.commentsCtrl.getCommentsByPostId('${post._id}')">View Comments</button>
-            <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postCtrl.removePost('${post._id}')"></i>
+            <i class="glyphicon glyphicon-trash pull-right" onclick="app.controllers.postsCtrl.removePost('${post._id}')"></i>
             </div>
         </div>
         <div class="row">
